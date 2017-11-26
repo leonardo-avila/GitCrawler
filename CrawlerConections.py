@@ -1,4 +1,5 @@
 import csv, requests, json
+#Limitando o número de repositórios devido ao limite de requisições da API do GitHub.
 
 with open('crawlerContributorsVSCODE', 'r') as f:
     data = csv.reader(f)
@@ -9,10 +10,12 @@ with open('crawlerContributorsVSCODE', 'r') as f:
         with open('crawlerGetRepos','a') as wr:
             writeit = csv.writer(wr, delimiter=',', lineterminator="\n")
             for item in url:
-                repos = str(item['full_name'])
-                l = requests.get("https://api.github.com/users/" + repos +"/languages")
+                repos = str(item['url'])
+                print(repos)
+                l = requests.get(repos +"/languages")
                 lurl = json.loads(l.text)
+                print(lurl)
                 for i in lurl:
                     lang = str([i])
-                    writeit.writerow([lang] + [row[1]])
+                    writeit.writerow(lang + [row[1]])
 
