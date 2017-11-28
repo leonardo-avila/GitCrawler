@@ -7,7 +7,7 @@ with open('crawlerContributorsVSCODE', 'r') as f:
         print(len(row))
         r = requests.get("https://api.github.com/users/" + row[1] + "/repos?page=1&per_page=5")
         url = json.loads(r.text)
-        with open('crawlerGetRepos','w') as wr:
+        with open('crawlerGetRepos.csv','w') as wr:
             writeit = csv.writer(wr, delimiter=',', lineterminator="\n")
             for item in url:
                 repos = str(item['url'])
@@ -18,4 +18,3 @@ with open('crawlerContributorsVSCODE', 'r') as f:
                 for i in lurl:
                     lang = i
                     writeit.writerow([lang] + [row[1]])
-
